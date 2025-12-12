@@ -31,5 +31,5 @@ switch ($route){
         require CONTROLLERS . 'LoginController.php';
         break;
     default:
-        echo "404 нет такой страницы";
+        require VIEWS . '404.tpl.php';
 }
