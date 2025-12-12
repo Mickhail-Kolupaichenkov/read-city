@@ -1,0 +1,10 @@
+RewriteEngine On
+RewriteBase /
+
+# Разрешить доступ к реальным файлам и папкам
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# Все остальные запросы перенаправлять на index.php
+RewriteRule ^ index.php [QSA,L]

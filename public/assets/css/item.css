@@ -1,0 +1,423 @@
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Шапка */
+        .header {
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #d32f2f;
+            position: relative;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 120px;
+            height: 2px;
+            background: linear-gradient(90deg, #d32f2f, #ff9800);
+        }
+
+        .header h1 {
+            color: #2c3e50;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: #d32f2f;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 6px;
+            transition: all 0.3s;
+            background: #fff;
+            border: 1px solid #e0e0e0;
+        }
+
+        .back-link:hover {
+            background: #d32f2f;
+            color: white;
+            text-decoration: none;
+            transform: translateX(-3px);
+            box-shadow: 0 4px 12px rgba(211, 47, 47, 0.2);
+        }
+
+        .back-link::before {
+            content: "←";
+            margin-right: 8px;
+        }
+
+        /* Основной блок с книгой */
+        .book-detail {
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            gap: 40px;
+            margin-bottom: 50px;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            border: 1px solid #eaeaea;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .book-detail::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 6px;
+            height: 100%;
+            background: linear-gradient(to bottom, #d32f2f, #ff9800);
+        }
+
+        @media (max-width: 900px) {
+            .book-detail {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            
+            .book-cover {
+                max-width: 300px;
+                margin: 0 auto;
+            }
+        }
+
+        .book-cover {
+            text-align: center;
+        }
+
+        .book-cover img {
+            width: 100%;
+            height: 400px;
+            object-fit: contain;
+            border-radius: 8px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            border: 1px solid #f0f0f0;
+            background: #fafafa;
+            padding: 10px;
+        }
+
+        .book-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+
+        .book-title {
+            font-size: 2.2rem;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-weight: 700;
+            line-height: 1.3;
+        }
+
+        .book-author {
+            font-size: 1.4rem;
+            color: #d32f2f;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px dashed #eee;
+            font-weight: 500;
+        }
+
+        .book-description {
+            font-size: 0.9rem;
+            line-height: 1.7;
+            color: #555;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 8px;
+            border-left: 4px solid #d32f2f;
+        }
+
+        .book-meta {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .meta-item {
+            background: linear-gradient(135deg, #f5f5f5, #e0e0e0);
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 0.95rem;
+            color: #666;
+            font-weight: 500;
+            border: 1px solid #ddd;
+        }
+
+        .meta-item.highlight {
+            background: linear-gradient(135deg, #d32f2f, #ff9800);
+            color: white;
+            font-weight: 600;
+        }
+
+        /* Форма отзывов */
+        .reviews-section {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            margin-bottom: 40px;
+            border: 1px solid #eaeaea;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            color: #2c3e50;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #d32f2f;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-title::before {
+            content: "💬";
+            margin-right: 12px;
+            font-size: 1.5rem;
+        }
+
+        .review-form {
+            display: none;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            padding: 25px;
+            background: #f9f9f9;
+            border-radius: 10px;
+            border: 1px solid #e0e0e0;
+        }
+
+        @media (max-width: 650px) {
+            .review-form {
+                grid-template-columns: 1fr;
+                padding: 20px;
+            }
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form-label {
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: #444;
+            font-size: 1rem;
+        }
+
+        .form-input,
+        .form-textarea {
+            padding: 14px 18px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s;
+            background: white;
+        }
+
+        .form-input:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: #d32f2f;
+            box-shadow: 0 0 0 3px rgba(211, 47, 47, 0.1);
+        }
+
+        .form-textarea {
+            min-height: 150px;
+            resize: vertical;
+            line-height: 1.6;
+        }
+
+        .submit-btn {
+            grid-column: 1 / -1;
+            background: #d32f2f;
+            color: white;
+            border: none;
+            padding: 16px 35px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+            max-width: 250px;
+            margin: 10px auto 0;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .submit-btn:hover {
+            background: #b71c1c;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(211, 47, 47, 0.25);
+        }
+
+        /* Стена отзывов */
+        .reviews-wall {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            border: 1px solid #eaeaea;
+        }
+
+        .reviews-list {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .review-item {
+            padding: 25px;
+            border: 1px solid #eaeaea;
+            border-radius: 10px;
+            background: #fafafa;
+            position: relative;
+            transition: all 0.3s;
+        }
+
+        .review-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+            border-color: #d32f2f;
+        }
+
+        .review-item::before {
+            content: '"';
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            font-size: 3rem;
+            color: rgba(211, 47, 47, 0.1);
+            font-family: Georgia, serif;
+        }
+
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #eee;
+        }
+
+        .review-author {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #2c3e50;
+            display: flex;
+            align-items: center;
+        }
+
+        .review-author::before {
+            content: "👤";
+            margin-right: 10px;
+            font-size: 1.1rem;
+        }
+
+        .review-date {
+            font-size: 0.9rem;
+            color: #777;
+            background: #f0f0f0;
+            padding: 5px 12px;
+            border-radius: 15px;
+        }
+
+        .review-content {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: #555;
+            padding-left: 20px;
+        }
+
+        .no-reviews {
+            text-align: center;
+            color: #777;
+            font-size: 1.1rem;
+            padding: 50px 20px;
+            background: #f9f9f9;
+            border-radius: 10px;
+            border: 2px dashed #ddd;
+        }
+
+        .no-reviews::before {
+            content: "📝";
+            font-size: 3rem;
+            display: block;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+
+        /* Футер */
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 25px;
+            border-top: 1px solid #eaeaea;
+            color: #777;
+            font-size: 0.9rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Кнопка добавления отзыва */
+        .add-review-btn {
+            display: inline-flex;
+            align-items: center;
+            background: #d32f2f;
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-bottom: 25px;
+        }
+
+        .add-review-btn:hover {
+            background: #b71c1c;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(211, 47, 47, 0.25);
+        }
+
+        .add-review-btn::before {
+            content: "✎";
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
