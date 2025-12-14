@@ -347,13 +347,14 @@
             <h1 class="login-title">Вход в систему</h1>
 
             <!-- Форма авторизации -->
-            <form id="loginForm">
+            <form id="loginForm" action="" method="POST">
                 <!-- Логин -->
                 <div class="form-group">
                     <label class="form-label" for="username">
                         Логин
                     </label>
                     <input 
+                        name="login"
                         type="text" 
                         id="username" 
                         class="form-control" 
@@ -371,6 +372,7 @@
                     </label>
                     <div class="password-wrapper">
                         <input 
+                            name="password"
                             type="password" 
                             id="password" 
                             class="form-control" 
@@ -400,135 +402,166 @@
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Плавное появление
-            document.body.style.opacity = '0';
-            setTimeout(() => {
-                document.body.style.transition = 'opacity 0.8s ease';
-                document.body.style.opacity = '1';
-            }, 100);
+document.addEventListener('DOMContentLoaded', function() {
+    // Плавное появление
+    document.body.style.opacity = '0';
+    setTimeout(() => {
+        document.body.style.transition = 'opacity 0.8s ease';
+        document.body.style.opacity = '1';
+    }, 100);
 
-            // Переменные
-            const form = document.getElementById('loginForm');
-            const username = document.getElementById('username');
-            const password = document.getElementById('password');
-            const togglePassword = document.getElementById('togglePassword');
-            const submitBtn = document.getElementById('submitBtn');
-            const remember = document.getElementById('remember');
+    // Переменные
+    const form = document.getElementById('loginForm');
+    const username = document.getElementById('username');
+    const password = document.getElementById('password');
+    const togglePassword = document.getElementById('togglePassword');
+    const submitBtn = document.getElementById('submitBtn');
+    const errorMessages = {
+        username: document.getElementById('usernameError'),
+        password: document.getElementById('passwordError')
+    };
 
-            // Восстановление данных из localStorage (если "Запомнить меня" было включено)
-            if (localStorage.getItem('rememberLogin') === 'true') {
-                const savedUsername = localStorage.getItem('savedUsername');
-                if (savedUsername) {
-                    username.value = savedUsername;
-                    remember.checked = true;
-                    password.focus();
-                }
+    // Показать/скрыть пароль
+    togglePassword.addEventListener('click', function() {
+        const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+        password.setAttribute('type', type);
+        this.textContent = type === 'password' ? '👁️' : '👁️‍🗨️';
+    });
+
+    // Валидация в реальном времени
+    username.addEventListener('input', function() {
+        validateField(this, 'username');
+    });
+
+    password.addEventListener('input', function() {
+        validateField(this, 'password');
+    });
+
+    // Функция валидации поля
+    function validateField(field, fieldName) {
+        const value = field.value.trim();
+        const errorEl = errorMessages[fieldName];
+        
+        field.classList.remove('error', 'success');
+        errorEl.textContent = '';
+        
+        if (!value) {
+            if (fieldName === 'username') {
+                errorEl.textContent = 'Введите логин';
+            } else {
+                errorEl.textContent = 'Введите пароль';
             }
+            field.classList.add('error');
+            return false;
+        }
+        
+        if (fieldName === 'username' && value.length < 3) {
+            errorEl.textContent = 'Логин должен содержать минимум 3 символа';
+            field.classList.add('error');
+            return false;
+        }
+        
+        if (fieldName === 'password' && value.length < 6) {
+            errorEl.textContent = 'Пароль должен содержать минимум 6 символов';
+            field.classList.add('error');
+            return false;
+        }
+        
+        field.classList.add('success');
+        return true;
+    }
 
-            // Валидация логина
-            username.addEventListener('blur', function() {
-                const value = this.value.trim();
-                const error = document.getElementById('usernameError');
-                
-                if (!value) {
-                    error.textContent = 'Введите логин';
-                    this.classList.add('error');
-                } else if (value.length < 3) {
-                    error.textContent = 'Логин должен содержать минимум 3 символа';
-                    this.classList.add('error');
-                } else {
-                    error.textContent = '';
-                    this.classList.remove('error');
-                }
-            });
+    // Проверка всей формы
+    function validateForm() {
+        let isValid = true;
+        
+        if (!validateField(username, 'username')) {
+            isValid = false;
+        }
+        
+        if (!validateField(password, 'password')) {
+            isValid = false;
+        }
+        
+        return isValid;
+    }
 
-            // Валидация пароля
-            password.addEventListener('blur', function() {
-                const value = this.value;
-                const error = document.getElementById('passwordError');
-                
-                if (!value) {
-                    error.textContent = 'Введите пароль';
-                    this.classList.add('error');
-                } else if (value.length < 6) {
-                    error.textContent = 'Пароль должен содержать минимум 6 символов';
-                    this.classList.add('error');
-                } else {
-                    error.textContent = '';
-                    this.classList.remove('error');
-                }
-            });
-
-            // Показать/скрыть пароль
-            togglePassword.addEventListener('click', function() {
-                const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
-                password.setAttribute('type', type);
-                this.textContent = type === 'password' ? '👁️' : '👁️‍🗨️';
-            });
-
-            // Обработка отправки формы
-            form.addEventListener('submit', function(e) {
-                e.preventDefault();
-                
-                // Триггерим все проверки
-                username.dispatchEvent(new Event('blur'));
-                password.dispatchEvent(new Event('blur'));
-                
-                // Проверяем ошибки
-                const errors = document.querySelectorAll('.error-message');
-                const hasErrors = Array.from(errors).some(error => error.textContent.trim() !== '');
-                
-                // Проверяем заполненность
-                const allFilled = username.value.trim() && password.value.trim();
-                
-                if (!hasErrors && allFilled) {
-                    // Блокируем кнопку
-                    submitBtn.disabled = true;
-                    submitBtn.textContent = 'Вход...';
-                    
-                    // Сохраняем логин если "Запомнить меня" включено
-                    if (remember.checked) {
-                        localStorage.setItem('savedUsername', username.value.trim());
-                        localStorage.setItem('rememberLogin', 'true');
-                    } else {
-                        localStorage.removeItem('savedUsername');
-                        localStorage.setItem('rememberLogin', 'false');
-                    }
-                    
-                    // Имитация отправки на сервер
-                    setTimeout(() => {
-                        // В реальном приложении здесь будет AJAX запрос
-                        const loginData = {
-                            username: username.value.trim(),
-                            password: password.value,
-                            remember: remember.checked
-                        };
-                        
-                        console.log('Отправка данных:', loginData);
-                        
-                        // Имитация успешного входа
-                        alert('Вход выполнен успешно! Добро пожаловать в библиотеку!');
-                        window.location.href = '/';
-                    }, 1500);
-                } else {
-                    // Если есть ошибки, показываем сообщение
-                    if (!allFilled) {
-                        alert('Пожалуйста, заполните все поля');
-                    }
-                }
-            });
-
-            // Автофокус на поле логина
-            username.focus();
+    // Обработка отправки формы
+    form.addEventListener('submit', function(e) {
+        // Проверяем валидность формы
+        if (!validateForm()) {
+            e.preventDefault(); // Не отправляем форму если есть ошибки
             
-            // Обработка клавиши Enter
-            form.addEventListener('keypress', function(e) {
-                if (e.key === 'Enter' && !submitBtn.disabled) {
-                    submitBtn.click();
-                }
-            });
+            // Фокусируемся на первом поле с ошибкой
+            const firstErrorField = document.querySelector('.form-control.error');
+            if (firstErrorField) {
+                firstErrorField.focus();
+            }
+            
+            // Показываем общее сообщение
+            if (!username.value.trim() || !password.value.trim()) {
+                alert('Пожалуйста, заполните все поля');
+            }
+            
+            return;
+        }
+        
+        // Если форма валидна - меняем состояние кнопки
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<span class="btn-spinner">⏳</span> Вход...';
+        submitBtn.style.opacity = '0.7';
+        
+        // Форма будет отправлена обычным POST запросом
+        // Добавляем небольшую задержку для UX
+        setTimeout(() => {
+            submitBtn.innerHTML = '<span class="btn-spinner">✓</span> Вход выполняется...';
+        }, 500);
+    });
+
+    // Обработка клавиши Enter в полях
+    [username, password].forEach(field => {
+        field.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter' && !submitBtn.disabled) {
+                // Нажимаем кнопку отправки
+                submitBtn.click();
+            }
         });
+    });
+
+    // Автофокус на поле логина
+    username.focus();
+    
+    // Восстановление данных из localStorage (опционально)
+    const savedLogin = localStorage.getItem('savedLogin');
+    if (savedLogin) {
+        username.value = savedLogin;
+        password.focus();
+    }
+    
+    // Сохраняем логин при вводе
+    username.addEventListener('input', function() {
+        const value = this.value.trim();
+        if (value.length >= 3) {
+            localStorage.setItem('savedLogin', value);
+        }
+    });
+    
+    // Стиль для спиннера в кнопке
+    const style = document.createElement('style');
+    style.textContent = `
+        .btn-spinner {
+            display: inline-block;
+            margin-right: 8px;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    `;
+    document.head.appendChild(style);
+});
     </script>
 </body>
 </html>

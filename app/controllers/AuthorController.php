@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 use App\models\Book;
 use App\models\Author;

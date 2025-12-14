@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Профиль пользователя - Библиотека</title>
+    <link href="assets/css/reset.css" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -409,9 +410,9 @@
         <div class="profile-header">
             <div class="profile-info">
                 <div class="profile-login">
-                    <h1 class="profile-name">Иван Петров</h1>
+                    <h1 class="profile-name"><?= $user_fullname ?></h1>
                     <span>👤</span>
-                    <span>@ivan_petrov</span>
+                    <span><?= $user_tag ?></span>
                 </div>
             </div>
         </div>

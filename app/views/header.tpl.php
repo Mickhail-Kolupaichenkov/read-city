@@ -10,15 +10,22 @@
         </button>
 
         <div class="header-actions">
-            <a href="/profile" class="header-btn profile-btn">
-                <span class="btn-icon">👤</span>
-                <span class="btn-text">Профиль</span>
-            </a>
-            
-            <a href="/login" class="header-btn logout-btn">
-                <span class="btn-icon">🚪</span>
-                <span class="btn-text">Выйти</span>
-            </a>
+            <?php if (!isset($_SESSION['user'])) { ?>
+                <a href="/login" class="header-btn profile-btn">
+                    <span class="btn-icon">👤</span>
+                    <span class="btn-text">Войти</span>
+                </a>
+            <?php } else { ?>
+                <a href="/profile" class="header-btn profile-btn">
+                    <span class="btn-icon">👤</span>
+                    <span class="btn-text">Профиль</span>
+                </a>
+
+                <a href="/login?action=logout" class="header-btn logout-btn">
+                    <span class="btn-icon">🚪</span>
+                    <span class="btn-text">Выйти</span>
+                </a>
+            <?php } ?>
         </div>
     </div>
 </header>
@@ -132,19 +139,19 @@
             padding: 15px 0;
             flex-wrap: wrap;
         }
-        
+
         .menu-toggle {
             display: block;
             order: 1;
         }
-        
+
         .header-logo {
             order: 2;
             flex: 1;
             justify-content: center;
             margin: 0 15px;
         }
-        
+
         .header-actions {
             display: none;
             order: 3;
@@ -155,11 +162,11 @@
             padding-top: 15px;
             border-top: 1px solid #eee;
         }
-        
+
         .header-actions.active {
             display: flex;
         }
-        
+
         .header-btn {
             width: 100%;
             justify-content: center;
@@ -170,7 +177,7 @@
         .logo-text {
             font-size: 1.5rem;
         }
-        
+
         .logo-icon {
             font-size: 1.8rem;
         }
@@ -182,13 +189,13 @@
     document.addEventListener('DOMContentLoaded', function() {
         const menuToggle = document.querySelector('.menu-toggle');
         const headerActions = document.querySelector('.header-actions');
-        
+
         if (menuToggle && headerActions) {
             menuToggle.addEventListener('click', function() {
                 headerActions.classList.toggle('active');
                 this.textContent = headerActions.classList.contains('active') ? '✕' : '☰';
             });
-            
+
             document.querySelectorAll('.header-btn').forEach(link => {
                 link.addEventListener('click', () => {
                     if (window.innerWidth <= 768) {
@@ -198,14 +205,14 @@
                 });
             });
         }
-        
+
         document.querySelectorAll('.header-btn').forEach(btn => {
             btn.addEventListener('mouseenter', function() {
                 if (window.innerWidth > 768) {
                     this.style.transform = 'translateY(-2px)';
                 }
             });
-            
+
             btn.addEventListener('mouseleave', function() {
                 if (window.innerWidth > 768) {
                     this.style.transform = 'translateY(0)';

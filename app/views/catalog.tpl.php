@@ -11,9 +11,6 @@
 <body>
 
     <div class="container">
-        <header class="header">
-            <h1>Наш каталог</h1>
-        </header>
 
         <main class="books-grid">
 
