@@ -11,8 +11,3 @@ define("CORE", ROOT . '/core/');
 define("PUBLIC_DIR", ROOT . '/public/'); 
 define("ROUTER", ROOT . '/router/');
 define("PATH", 'http://localhost:8888');
-
-
-
-use Core\DataBase;
-return $db = new DataBase();
