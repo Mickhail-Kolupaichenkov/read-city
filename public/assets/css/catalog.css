@@ -65,7 +65,7 @@
             transition: all 0.3s ease;
             display: flex;
             flex-direction: column;
-            height: 500px;
+            height: 540px;
             border: 1px solid #eaeaea;
             position: relative;
         }
@@ -133,11 +133,10 @@
 
         /* Изображение */
         .book-image {
-            height: 250px;
+            height: 300px;
             overflow: hidden;
             position: relative;
             flex-shrink: 0;
-            padding: 10px 20px;
             background: #fafafa;
             margin: 0 10px;
             border-radius: 6px;
