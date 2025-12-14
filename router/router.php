@@ -30,6 +30,9 @@ switch ($route){
     case '/login':
         require CONTROLLERS . 'LoginController.php';
         break;
+    case '/reg':
+        require CONTROLLERS . 'RegController.php';
+        break;
     default:
         require VIEWS . '404.tpl.php';
 }
