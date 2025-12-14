@@ -29,6 +29,6 @@ $book = $Book->find("SELECT * FROM books WHERE id = ?", [$item_id]);
 $author = $Author->find("SELECT name, lastname FROM authors WHERE id = ?", [$book['parent_id']]);
 $reviews = $Review->findAll("SELECT * FROM reviews WHERE parent_id = ?", [$item_id]);
 
-
+require VIEWS.'header.tpl.php';
 require VIEWS.'item.tpl.php';
 

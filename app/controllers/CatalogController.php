@@ -21,6 +21,6 @@ foreach($books as $key => $book) {
     }
 }
 
-
+require VIEWS.'header.tpl.php';
 require VIEWS.'catalog.tpl.php';
 

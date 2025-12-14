@@ -11,5 +11,6 @@ $item_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 $books = $Book->findAll("SELECT * FROM books WHERE parent_id = ?", [$item_id]);
 $author = $Author->find("SELECT name, lastname FROM authors WHERE id = ?", [$item_id]);
 
+require VIEWS.'header.tpl.php';
 require VIEWS.'author.tpl.php';
-?>
+

@@ -413,10 +413,6 @@
                     <span>👤</span>
                     <span>@ivan_petrov</span>
                 </div>
-                <button class="logout-btn">
-                    <span>🚪</span>
-                    <span>Выйти</span>
-                </button>
             </div>
         </div>
 
